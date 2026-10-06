@@ -1,69 +1,75 @@
 import Image from "next/image";
+import NotifyForm from "./notify-form";
+
+const categories = ["Kids", "Mobility", "RC", "Home", "Gadgets"];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="zappy-bg flex flex-1 flex-col items-center overflow-hidden">
+      <main className="flex w-full max-w-6xl flex-1 flex-col items-center gap-6 px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-6 sm:gap-10 sm:px-8 sm:py-12">
+        {/* Wide banner on larger screens */}
         <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+          src="/zappy-banner.jpg"
+          alt="Zappy Online Store — Kids, Mobility, RC, Home, Gadgets"
+          width={3417}
+          height={1300}
+          quality={95}
+          preload
+          sizes="(min-width: 1152px) 1152px, 100vw"
+          className="hidden h-auto w-full rounded-3xl shadow-2xl ring-4 ring-zappy-yellow/70 md:block"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+
+        {/* Mascot + wordmark on phones */}
+        <div className="flex w-full flex-col items-center gap-4 md:hidden">
+          <h1 className="font-display text-5xl font-bold sm:text-6xl text-zappy-yellow drop-shadow-[0_4px_0_rgba(0,0,0,0.25)]">
+            Zappy
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="-mt-3 font-display text-base tracking-widest sm:text-lg text-zappy-yellow">
+            ONLINE STORE
           </p>
+          <Image
+            src="/zappy-mascot.png"
+            alt="Zappy mascot carrying shopping bags full of toys"
+            width={1152}
+            height={1160}
+            quality={95}
+            preload
+            sizes="(min-width: 640px) 384px, 80vw"
+            className="animate-zappy-bounce h-auto w-4/5 max-w-sm rounded-3xl shadow-2xl"
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        <section className="flex w-full flex-col items-center gap-5 text-center sm:gap-6">
+          <span className="rounded-full bg-zappy-yellow px-4 py-1 font-display text-xs font-bold uppercase tracking-widest text-zappy-red-dark sm:text-sm">
+            Launching soon
+          </span>
+          <h2 className="font-display text-[2rem] font-bold leading-tight text-balance min-[400px]:text-4xl sm:text-6xl">
+            Something <span className="text-zappy-yellow">Zappy</span> is
+            <br className="hidden sm:block" /> on its way!
+          </h2>
+          <p className="max-w-xl text-[0.95rem] text-white/85 text-pretty sm:text-lg">
+            We&apos;re packing our bags with the coolest toys, RC cars, drones,
+            ride-ons and gadgets. Be the first to know when the store opens.
+          </p>
+
+          <NotifyForm />
+
+          <ul className="flex flex-wrap justify-center gap-2 pt-2">
+            {categories.map((c) => (
+              <li
+                key={c}
+                className="rounded-full border-2 border-zappy-yellow/70 px-3.5 py-1 font-display text-sm font-semibold text-zappy-yellow sm:px-4 sm:py-1.5 sm:text-base"
+              >
+                {c}
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
+
+      <footer className="w-full px-4 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center text-xs text-white/70 sm:text-sm">
+        © {new Date().getFullYear()} Zappy Online Store. All rights reserved.
+      </footer>
     </div>
   );
 }
