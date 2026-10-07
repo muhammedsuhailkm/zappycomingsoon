@@ -1,11 +1,40 @@
 import Image from "next/image";
 import NotifyForm from "./notify-form";
+import { siteDescription, siteName, siteUrl } from "./site";
 
 const categories = ["Kids", "Mobility", "RC", "Home", "Gadgets"];
+
+// Structured data so search engines understand who the site belongs to.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: siteName,
+      url: siteUrl,
+      logo: `${siteUrl}/icon.png`,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: siteName,
+      url: siteUrl,
+      description: siteDescription,
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+  ],
+};
 
 export default function Home() {
   return (
     <div className="zappy-bg flex flex-1 flex-col items-center overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <main className="flex w-full max-w-6xl flex-1 flex-col items-center gap-6 px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-6 sm:gap-10 sm:px-8 sm:py-12">
         {/* Wide banner on larger screens */}
         <Image
@@ -21,9 +50,9 @@ export default function Home() {
 
         {/* Mascot + wordmark on phones */}
         <div className="flex w-full flex-col items-center gap-4 md:hidden">
-          <h1 className="font-display text-5xl font-bold sm:text-6xl text-zappy-yellow drop-shadow-[0_4px_0_rgba(0,0,0,0.25)]">
+          <p className="font-display text-5xl font-bold sm:text-6xl text-zappy-yellow drop-shadow-[0_4px_0_rgba(0,0,0,0.25)]">
             Zappy
-          </h1>
+          </p>
           <p className="-mt-3 font-display text-base tracking-widest sm:text-lg text-zappy-yellow">
             ONLINE STORE
           </p>
@@ -43,10 +72,10 @@ export default function Home() {
           <span className="rounded-full bg-zappy-yellow px-4 py-1 font-display text-xs font-bold uppercase tracking-widest text-zappy-red-dark sm:text-sm">
             Launching soon
           </span>
-          <h2 className="font-display text-[2rem] font-bold leading-tight text-balance min-[400px]:text-4xl sm:text-6xl">
+          <h1 className="font-display text-[2rem] font-bold leading-tight text-balance min-[400px]:text-4xl sm:text-6xl">
             Something <span className="text-zappy-yellow">Zappy</span> is
             <br className="hidden sm:block" /> on its way!
-          </h2>
+          </h1>
           <p className="max-w-xl text-[0.95rem] text-white/85 text-pretty sm:text-lg">
             We&apos;re packing our bags with the coolest toys, RC cars, drones,
             ride-ons and gadgets. Be the first to know when the store opens.
@@ -54,7 +83,10 @@ export default function Home() {
 
           <NotifyForm />
 
-          <ul className="flex flex-wrap justify-center gap-2 pt-2">
+          <ul
+            aria-label="Shop categories"
+            className="flex flex-wrap justify-center gap-2 pt-2"
+          >
             {categories.map((c) => (
               <li
                 key={c}

@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Fredoka, Lexend } from "next/font/google";
 import "./globals.css";
+import {
+  siteDescription,
+  siteName,
+  siteTitle,
+  siteUrl,
+  themeColor,
+} from "./site";
 
 const fredoka = Fredoka({
   variable: "--font-fredoka",
@@ -14,16 +21,62 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: "Zappy Online Store — Coming Soon",
-  description:
-    "Zappy Online Store is launching soon. Kids · Mobility · RC · Home · Gadgets.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteTitle,
+    template: `%s | ${siteName}`,
+  },
+  description: siteDescription,
+  applicationName: siteName,
+  keywords: [
+    "Zappy",
+    "Zappy Online Store",
+    "online toy store",
+    "kids toys",
+    "RC cars",
+    "remote control cars",
+    "drones",
+    "kids ride-ons",
+    "scooters",
+    "gadgets",
+    "home gadgets",
+  ],
+  authors: [{ name: siteName }],
+  creator: siteName,
+  publisher: siteName,
+  category: "shopping",
+  alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  formatDetection: { telephone: false, email: false, address: false },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName,
+    title: siteTitle,
+    description: siteDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+  },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#d90f16",
+  themeColor,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
